@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #2d5e3b; /* El verde bosque de fondo general */
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+/* Cada “pantalla” ocupa toda la ventana, pero están ocultas excepto la activa */
+.screen {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+/* La pantalla activa se muestra */
+.screen.active {
+  display: flex;
+}
+
+/* Botón de retroceso fijo abajo izquierda */
+.back-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 28px;
+  cursor: pointer;
+  display: none; /* se muestra desde JS */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pantalla de bienvenida */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-placeholder {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.btn-start {
+  margin-top: 30px;
+  padding: 15px 40px;
+  font-size: 22px;
+  background: #f9a825;
+  color: #1e3b28;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Contenedor de círculos */
+.circle-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  max-width: 400px;
+  margin-top: 30px;
+}
+
+/* Círculos para categorías y subcategorías */
+.circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  font-size: 36px;
+  overflow: hidden; /* Evita que las imágenes se salgan del círculo */
+}
+.circle p {
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 0 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+.circle:active {
+  transform: scale(0.9);
+  background: rgba(255,255,255,0.3);
+}
+
+/* Carrusel horizontal */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  max-width: 90vw;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.carousel::-webkit-scrollbar {
+  display: none; /* Esconde la barra de scroll nativa para simular una app móvil */
+}
+.carousel .circle {
+  flex-shrink: 0;
+  scroll-snap-align: center;
+}
+
+/* Ficha de detalle (Mejorada con contención de altura y scroll interno) */
+.detail-card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  max-width: 380px;
+  width: 95%;
+  max-height: 85vh; /* Evita que la tarjeta sobrepase la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  flex-shrink: 0; /* Previene que la imagen se achate con textos largos */
+  overflow: hidden;
+}
+
+.detail-header-info {
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+#detail-scientific-name {
+  font-style: italic;
+  opacity: 0.8;
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+/* Bloque para agrupar las insignias técnicas */
+.detail-badges-container {
+  margin-bottom: 15px;
+  flex-shrink: 0;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 2px;
+}
+
+/* Colores para las categorías de conservación de las fotos de tu libro */
+.badge-risk {
+  display: inline-block;
+  padding: 6px 14px;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.badge-risk.cr { background-color: #d32f2f; color: #fff; } /* Peligro Crítico = Rojo */
+.badge-risk.en { background-color: #f57c00; color: #fff; } /* En Peligro = Naranja */
+.badge-risk.vu { background-color: #fbc02d; color: #1e3b28; } /* Vulnerable = Amarillo */
+.badge-risk.nt { background-color: #7b1fa2; color: #fff; } /* Casi Amenazado = Morado */
+.badge-risk.lc { background-color: #388e3c; color: #fff; } /* Preocupación Menor = Verde */
+.badge-risk.ne { background-color: #616161; color: #fff; } /* No Evaluado = Gris */
+
+/* Caja con scroll dedicada para leer el texto extendido sin desbordar */
+.detail-extended-content {
+  overflow-y: auto;
+  text-align: left; /* Alineado cómodo a la izquierda para leer */
+  padding-right: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Barra de scroll estilizada discreta para Linux/Wayland */
+.detail-extended-content::-webkit-scrollbar {
+  width: 5px;
+}
+.detail-extended-content::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+.detail-extended-content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 10px;
+}
+
+.detail-extended-content h3 {
+  font-size: 15px;
+  margin: 15px 0 5px 0;
+  color: #f9a825; /* Amarillo de realce */
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 2px;
+}
+
+.detail-extended-content p {
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.detail-extended-content hr {
+  border: none;
+  border-top: 1px dashed rgba(255,255,255,0.2);
+  margin: 10px 0;
+}

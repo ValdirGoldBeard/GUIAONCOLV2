@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Guía Oncol V2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="btn-back" class="back-button" onclick="goBack()">←</button>
+
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-content">
+      <div class="logo-placeholder">🌿</div>
+      <h1>Parque Oncol</h1>
+      <button class="btn-start" onclick="navigateTo('categories')">Toca para continuar</button>
+    </div>
+  </div>
+
+  <div id="screen-categories" class="screen">
+    <h2>Elige una categoría</h2>
+    <div class="circle-container">
+      <div class="circle" onclick="showSubcategories('fauna')">
+        <span>🐾</span>
+        <p>Fauna</p>
+      </div>
+      <div class="circle" onclick="showSubcategories('flora')">
+        <span>🌼</span>
+        <p>Flora</p>
+      </div>
+      <div class="circle" onclick="showSubcategories('fungi')">
+        <span>🍄</span>
+        <p>Fungi</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-subcategories" class="screen">
+    <h2 id="subcategory-title">Subcategorías</h2>
+    <div id="subcategory-container" class="circle-container">
+      </div>
+  </div>
+
+  <div id="screen-species-list" class="screen">
+    <h2 id="species-list-title">Especies</h2>
+    <div id="species-carousel" class="carousel">
+      </div>
+  </div>
+
+  <div id="screen-species-detail" class="screen">
+    <div class="detail-card">
+      <div id="detail-image" class="detail-image">🖼️</div>
+      
+      <div class="detail-header-info">
+        <h2 id="detail-common-name">Nombre común</h2>
+        <p id="detail-scientific-name">Nombre científico</p>
+      </div>
+
+      <div id="detail-risk" class="detail-badges-container">
+        </div>
+
+      <div id="detail-description" class="detail-extended-content">
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
