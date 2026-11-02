@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Guía de Flora · Parque Oncol</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Botón volver con navegación en pila -->
+  <button id="btn-back" class="back-button" aria-label="Volver" onclick="goBack()">←</button>
+
+  <!-- PANTALLA 1: Bienvenida -->
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-content">
+      <div class="logo-placeholder">🌿</div>
+      <h1 class="welcome-title">Guía de Flora</h1>
+      <p class="welcome-subtitle">Parque Oncol · Selva Valdiviana</p>
+      <div id="welcome-stats" class="welcome-stats">Cargando catálogo...</div>
+      <button class="btn-start" onclick="navigateTo('subcategories')">Explorar Flora</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 2: Subcategorías de Flora (dinámicas según carpetas) -->
+  <div id="screen-subcategories" class="screen">
+    <div class="screen-header">
+      <h2 id="subcategory-title">Flora de Oncol</h2>
+      <p class="screen-subtitle">Selecciona una categoría botánica</p>
+    </div>
+    <div id="subcategory-container" class="circle-container">
+      <!-- Generado dinámicamente desde especies.json -->
+    </div>
+  </div>
+
+  <!-- PANTALLA 3: Lista / Carrusel de especies -->
+  <div id="screen-species-list" class="screen">
+    <div class="screen-header">
+      <h2 id="species-list-title">Especies</h2>
+      <p id="species-list-subtitle" class="screen-subtitle">0 especies encontradas</p>
+    </div>
+
+    <!-- Buscador rápido dentro del grupo -->
+    <div class="search-container">
+      <input 
+        type="search" 
+        id="species-search" 
+        placeholder="🔍 Buscar especie..." 
+        aria-label="Buscar especie"
+        oninput="handleSearch(this.value)"
+      >
+    </div>
+
+    <div id="species-carousel" class="carousel">
+      <!-- Especies cargadas dinámicamente -->
+    </div>
+  </div>
+
+  <!-- PANTALLA 4: Ficha detallada de la especie -->
+  <div id="screen-species-detail" class="screen">
+    <div class="detail-card">
+      <div id="detail-image" class="detail-image">🌿</div>
+      
+      <div class="detail-header-info">
+        <h2 id="detail-common-name">Nombre Común</h2>
+        <p id="detail-scientific-name">Nombre científico</p>
+        <p id="detail-family" class="detail-family">Familia: ...</p>
+      </div>
+
+      <!-- Insignias técnicas y botánicas (IUCN, origen, altura, hoja, medicinal, etc.) -->
+      <div id="detail-badges" class="detail-badges-container">
+      </div>
+
+      <!-- Contenido textual con scroll interno para lectura en móvil -->
+      <div id="detail-sections" class="detail-extended-content">
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

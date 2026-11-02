@@ -1,0 +1,530 @@
+/* ==========================================================================
+   GUÍA DE FLORA - PARQUE ONCOL (V2)
+   Estilos Móvil SPA · Glassmorphism & Verde Bosque Valdiviano
+   ========================================================================== */
+
+:root {
+  --bg-primary: #1f4229;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #2f653f 0%, #173320 100%);
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-active: rgba(255, 255, 255, 0.25);
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.78);
+  --accent-gold: #fbc02d;
+  --accent-green: #81c784;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  position: relative;
+}
+
+/* ==========================================================================
+   PANTALLAS (SPA)
+   ========================================================================== */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+}
+
+.screen-header {
+  margin-bottom: 16px;
+  max-width: 360px;
+}
+
+.screen-header h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.screen-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   BOTÓN VOLVER
+   ========================================================================== */
+.back-button {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(15, 30, 20, 0.85);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.back-button:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   PANTALLA 1: BIENVENIDA
+   ========================================================================== */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 340px;
+  animation: fadeIn 0.4s ease;
+}
+
+.logo-placeholder {
+  font-size: 72px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+.welcome-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.welcome-subtitle {
+  font-size: 1.05rem;
+  color: var(--accent-gold);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.welcome-stats {
+  margin-top: 18px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+}
+
+.btn-start {
+  margin-top: 28px;
+  padding: 14px 36px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: #f9a825;
+  color: #173320;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.btn-start:active {
+  transform: scale(0.95);
+  background: #e5981c;
+}
+
+/* ==========================================================================
+   PANTALLA 2: SUBCATEGORÍAS (GRILLA DE CÍRCULOS)
+   ========================================================================== */
+.circle-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 340px;
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 8px 4px 60px 4px;
+}
+
+.circle {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+.circle:active {
+  transform: scale(0.94);
+  background: var(--glass-active);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.circle-icon {
+  font-size: 38px;
+  margin-bottom: 6px;
+}
+
+.circle-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.circle-count {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--accent-gold);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   PANTALLA 3: LISTA / CARRUSEL DE ESPECIES
+   ========================================================================== */
+.search-container {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 12px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  outline: none;
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 20px 40px 20px;
+  max-width: 100vw;
+  width: 100%;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-item {
+  flex: 0 0 160px;
+  height: 200px;
+  scroll-snap-align: center;
+  border-radius: 22px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.circle-avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.circle-avatar .placeholder-icon {
+  font-size: 40px;
+}
+
+.circle-common-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.circle-sci-name {
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-top: 3px;
+}
+
+.empty-state {
+  width: 100%;
+  padding: 30px 15px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   PANTALLA 4: FICHA DETALLADA (CARD CON SCROLL)
+   ========================================================================== */
+.detail-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 20px 16px;
+  max-width: 400px;
+  width: 95%;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  animation: fadeIn 0.25s ease;
+}
+
+.detail-image {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-header-info {
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+#detail-common-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+#detail-scientific-name {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--accent-gold);
+  margin-top: 3px;
+}
+
+.detail-family {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   INSIGNIAS TÉCNICAS (BADGES)
+   ========================================================================== */
+.detail-badges-container {
+  margin-bottom: 12px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.compact-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.14);
+  padding: 4px 9px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+.badge-medicinal {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: rgba(76, 175, 80, 0.45);
+  color: #c8e6c9;
+}
+
+/* Insignias de riesgo IUCN */
+.badge-risk {
+  display: inline-block;
+  padding: 5px 12px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.badge-risk.cr { background-color: #d32f2f; color: #fff; } /* Peligro Crítico */
+.badge-risk.en { background-color: #e65100; color: #fff; } /* En Peligro */
+.badge-risk.vu { background-color: #fbc02d; color: #173320; } /* Vulnerable */
+.badge-risk.nt { background-color: #6a1b9a; color: #fff; } /* Casi Amenazado */
+.badge-risk.lc { background-color: #2e7d32; color: #fff; } /* Preocupación Menor */
+.badge-risk.dd { background-color: #455a64; color: #fff; } /* Datos Insuficientes */
+.badge-risk.ne { background-color: #616161; color: #fff; } /* No Evaluado / Pendiente */
+
+/* ==========================================================================
+   CONTENIDO EXTENDIDO (SCROLL INTERNO)
+   ========================================================================== */
+.detail-extended-content {
+  overflow-y: auto;
+  text-align: left;
+  padding-right: 6px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.detail-extended-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.detail-extended-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.detail-extended-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+/* Callout destacados: Cómo reconocerla y Dato Curioso */
+.callout-box {
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+.callout-box h4 {
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.callout-recognize {
+  background: rgba(249, 168, 37, 0.16);
+  border-left: 4px solid var(--accent-gold);
+}
+
+.callout-recognize h4 {
+  color: var(--accent-gold);
+}
+
+.callout-curiosity {
+  background: rgba(129, 199, 132, 0.16);
+  border-left: 4px solid var(--accent-green);
+}
+
+.callout-curiosity h4 {
+  color: var(--accent-green);
+}
+
+.detail-section {
+  margin-bottom: 12px;
+}
+
+.detail-section h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 2px;
+  margin-bottom: 4px;
+}
+
+.detail-section p {
+  opacity: 0.9;
+  font-size: 0.85rem;
+}
+
+.empty-text {
+  text-align: center;
+  font-style: italic;
+  color: var(--text-muted);
+  padding: 20px 0;
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
