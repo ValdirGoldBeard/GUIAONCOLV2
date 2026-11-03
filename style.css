@@ -59,7 +59,7 @@ html, body {
 }
 
 .screen-header {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   max-width: 360px;
 }
 
@@ -76,26 +76,26 @@ html, body {
 }
 
 /* ==========================================================================
-   BOTÓN VOLVER
+   BOTÓN VOLVER (ESQUINA SUPERIOR IZQUIERDA)
    ========================================================================== */
 .back-button {
   position: fixed;
-  bottom: 18px;
-  left: 18px;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
   z-index: 100;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--glass-border);
-  background: rgba(15, 30, 20, 0.85);
+  background: rgba(15, 30, 20, 0.88);
   backdrop-filter: blur(8px);
   color: #fff;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
   display: none;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   transition: transform 0.15s, background 0.15s;
 }
 
@@ -165,17 +165,56 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 2: SUBCATEGORÍAS (GRILLA DE CÍRCULOS)
+   BUSCADOR GLOBAL (EN PANTALLA 2)
+   ========================================================================== */
+.search-container {
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: 14px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.search-container input:focus {
+  border-color: var(--accent-gold);
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ==========================================================================
+   PANTALLA 2: SUBCATEGORÍAS & RESULTADOS DE BÚSQUEDA
    ========================================================================== */
 .circle-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
   max-width: 340px;
   width: 100%;
-  max-height: 70vh;
+  max-height: 64vh;
   overflow-y: auto;
-  padding: 8px 4px 60px 4px;
+  padding: 6px 4px 60px 4px;
+}
+
+.circle-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.circle-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
 }
 
 .circle {
@@ -221,30 +260,27 @@ html, body {
   border-radius: 12px;
 }
 
+.search-result-item {
+  position: relative;
+  padding: 12px 8px;
+}
+
+.search-category-tag {
+  margin-top: 4px;
+  font-size: 0.68rem;
+  color: var(--accent-gold);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 6px;
+  border-radius: 8px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ==========================================================================
    PANTALLA 3: LISTA / CARRUSEL DE ESPECIES
    ========================================================================== */
-.search-container {
-  width: 100%;
-  max-width: 320px;
-  margin-bottom: 12px;
-}
-
-.search-container input {
-  width: 100%;
-  padding: 10px 16px;
-  font-size: 0.9rem;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  outline: none;
-}
-
-.search-container input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
 .carousel {
   display: flex;
   overflow-x: auto;
@@ -269,27 +305,49 @@ html, body {
   text-align: center;
 }
 
+/* Contenedor del avatar con mini-sello UICN en esquina superior derecha */
 .circle-avatar {
+  position: relative;
   width: 86px;
   height: 86px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.25);
   margin-bottom: 10px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .circle-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .circle-avatar .placeholder-icon {
   font-size: 40px;
+}
+
+/* Mini logo UICN en carrusel y resultados de búsqueda */
+.carousel-iucn-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.65rem;
+  border: 2px solid #173320;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+  line-height: 1;
 }
 
 .circle-common-name {
@@ -321,47 +379,143 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 4: FICHA DETALLADA (CARD CON SCROLL)
+   PANTALLA 4: FICHA DETALLADA (2 COLUMNAS HERO + CONTENIDO)
    ========================================================================== */
 .detail-card {
   background: var(--glass-bg);
   backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  padding: 20px 16px;
-  max-width: 400px;
+  padding: 18px 16px;
+  max-width: 420px;
   width: 95%;
-  max-height: 86vh;
+  max-height: 88vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   animation: fadeIn 0.25s ease;
 }
 
-.detail-image {
-  width: 110px;
-  height: 110px;
+/* HERO: 2 Columnas (Píldoras 2 líneas izquierda, Foto con logo UICN derecha) */
+.detail-hero {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.detail-badges-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+  justify-content: center;
+}
+
+/* Píldora individual técnica de 2 líneas */
+.badge-item {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.15;
+  backdrop-filter: blur(4px);
+}
+
+.badge-item-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-item-val {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Contenedor de la foto en el Hero */
+.detail-photo-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  align-self: center;
+}
+
+.detail-photo-wrapper .detail-image {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.18);
   border: 3px solid rgba(255, 255, 255, 0.25);
-  margin: 0 auto 10px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 48px;
-  flex-shrink: 0;
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
-.detail-image img {
+.detail-photo-wrapper .detail-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Sello oficial circular UICN en esquina superior derecha de la foto */
+.hero-iucn-seal {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.88rem;
+  border: 2.5px solid #173320;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55);
+  z-index: 10;
+}
+
+.iucn-seal-ring {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+}
+
+.iucn-seal-text {
+  position: relative;
+  z-index: 2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Arial Black", sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+}
+
+/* Títulos taxonómicos */
 .detail-header-info {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   flex-shrink: 0;
 }
 
@@ -383,60 +537,6 @@ html, body {
   color: var(--text-muted);
   margin-top: 2px;
 }
-
-/* ==========================================================================
-   INSIGNIAS TÉCNICAS (BADGES)
-   ========================================================================== */
-.detail-badges-container {
-  margin-bottom: 12px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.compact-badges-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  justify-content: center;
-  margin-top: 4px;
-}
-
-.badge {
-  background: rgba(255, 255, 255, 0.14);
-  padding: 4px 9px;
-  font-size: 0.74rem;
-  font-weight: 500;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  white-space: nowrap;
-}
-
-.badge-medicinal {
-  background: rgba(76, 175, 80, 0.25);
-  border-color: rgba(76, 175, 80, 0.45);
-  color: #c8e6c9;
-}
-
-/* Insignias de riesgo IUCN */
-.badge-risk {
-  display: inline-block;
-  padding: 5px 12px;
-  font-weight: 700;
-  font-size: 0.78rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
-
-.badge-risk.cr { background-color: #d32f2f; color: #fff; } /* Peligro Crítico */
-.badge-risk.en { background-color: #e65100; color: #fff; } /* En Peligro */
-.badge-risk.vu { background-color: #fbc02d; color: #173320; } /* Vulnerable */
-.badge-risk.nt { background-color: #6a1b9a; color: #fff; } /* Casi Amenazado */
-.badge-risk.lc { background-color: #2e7d32; color: #fff; } /* Preocupación Menor */
-.badge-risk.dd { background-color: #455a64; color: #fff; } /* Datos Insuficientes */
-.badge-risk.ne { background-color: #616161; color: #fff; } /* No Evaluado / Pendiente */
 
 /* ==========================================================================
    CONTENIDO EXTENDIDO (SCROLL INTERNO)
@@ -464,7 +564,7 @@ html, body {
   border-radius: 4px;
 }
 
-/* Callout destacados: Cómo reconocerla y Dato Curioso */
+/* Callouts destacados: Cómo reconocerla y Dato Curioso */
 .callout-box {
   border-radius: 14px;
   padding: 10px 12px;
@@ -496,22 +596,83 @@ html, body {
   color: var(--accent-green);
 }
 
-.detail-section {
-  margin-bottom: 12px;
+/* ==========================================================================
+   ACORDEONES DESPLEGABLES (SECCIONES EXTENDIDAS)
+   ========================================================================== */
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
 }
 
-.detail-section h3 {
-  font-size: 0.9rem;
-  font-weight: 700;
+.accordion-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.accordion-item[open] {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.accordion-header::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accordion-icon {
+  font-size: 1rem;
+}
+
+.accordion-chevron {
+  font-size: 0.8rem;
   color: var(--accent-gold);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding-bottom: 2px;
-  margin-bottom: 4px;
+  transition: transform 0.2s ease;
 }
 
-.detail-section p {
-  opacity: 0.9;
-  font-size: 0.85rem;
+.accordion-item[open] .accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.accordion-body {
+  padding: 0 14px 12px 14px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 2px;
+  padding-top: 8px;
+}
+
+.md-list {
+  margin: 6px 0 6px 16px;
+  padding: 0;
+}
+
+.md-list li {
+  margin-bottom: 4px;
 }
 
 .empty-text {
